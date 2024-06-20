@@ -32,13 +32,13 @@ create_backup()
 
 echo "Queuing $1 backups..."
 dirname=${1%*/}
-dirname=${1##*/}
+dirname=${dirname##*/}
 mkdir -p $2/$dirname
 readarray -t excluded < $2/$dirname/exclude.txt
 for vol in $(/usr/sbin/zfs list -o name -d 1 -Hr $1 | sed -n '1!p')
 do
     name=${vol%*/}
-    name=${vol##*/}
+    name=${name##*/}
     if [[ " ${excluded[*]} " =~ " ${name} " ]]; then
         echo "Skipping backup for excluded $vol"
     else
