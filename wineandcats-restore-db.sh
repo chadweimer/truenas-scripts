@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Usage: restore-wineandcats-db.sh <stage> <password> <pgversion>
+# Usage: wineandcats-restore-db.sh <stage> <password> <pgversion>
 #
-# Example: restore-wineandcats-db.sh dev thepassword 16
+# Example: wineandcats-restore-db.sh dev thepassword 16
 
 GOMP_STAGE=$1
 PGPASSWORD=$2
