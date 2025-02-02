@@ -17,6 +17,12 @@ while IFS='=' read -r key value; do
 
   echo "Updating stack '$key'..."
   curl -sSX POST $value
+
+  # Don't try to update all the stacks at once.
+  # We're not trying to guarantee each one is complete; just rate limit.
+  echo "Sleeping for 1 minute..."
+  sleep 1m
+
   echo "Updated stack '$key'."
 done < "$1"
 
