@@ -10,13 +10,20 @@
 # stack2=https://hook.url
 #
 
+declare -A hooks
 while IFS='=' read -r key value; do
   # Skip lines starting with sharp
   # or lines containing only space or empty lines
   [[ "$key" =~ ^([[:space:]]*|[[:space:]]*#.*)$ ]] && continue
 
+  hooks[$key]=$value
+done < "$1"
+
+for key in "${!hooks[@]}"
+do
+
   echo "Updating stack '$key'..."
-  curl -sSX POST $value
+  curl -sSX POST ${hooks[$key]}
 
   # Don't try to update all the stacks at once.
   # We're not trying to guarantee each one is complete; just rate limit.
@@ -24,6 +31,6 @@ while IFS='=' read -r key value; do
   sleep 1m
 
   echo "Updated stack '$key'."
-done < "$1"
+done
 
 docker image prune -f
