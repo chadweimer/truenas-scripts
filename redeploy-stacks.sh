@@ -34,3 +34,4 @@ do
 done
 
 docker image prune -f
+docker volume prune -f
